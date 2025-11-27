@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/invopop/jsonschema/examples/user",
+  "$id": "https://github.com/eino-contrib/jsonschema/examples/user",
   "$ref": "#/$defs/User",
   "$defs": {
     "NamedPets": {
@@ -56,7 +56,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "description": "Field ID of Go type github.com/invopop/jsonschema/examples.User."
+          "description": "Field ID of Go type github.com/eino-contrib/jsonschema/examples.User."
         },
         "name": {
           "type": "string",
@@ -80,15 +80,15 @@
         },
         "tags": {
           "type": "object",
-          "description": "Field Tags of Go type github.com/invopop/jsonschema/examples.User."
+          "description": "Field Tags of Go type github.com/eino-contrib/jsonschema/examples.User."
         },
         "pets": {
           "$ref": "#/$defs/Pets",
-          "description": "Field Pets of Go type github.com/invopop/jsonschema/examples.User."
+          "description": "Field Pets of Go type github.com/eino-contrib/jsonschema/examples.User."
         },
         "named_pets": {
           "$ref": "#/$defs/NamedPets",
-          "description": "Field NamedPets of Go type github.com/invopop/jsonschema/examples.User."
+          "description": "Field NamedPets of Go type github.com/eino-contrib/jsonschema/examples.User."
         },
         "plants": {
           "items": {
@@ -96,7 +96,7 @@
           },
           "type": "array",
           "title": "Plants",
-          "description": "Field Plants of Go type github.com/invopop/jsonschema/examples.User."
+          "description": "Field Plants of Go type github.com/eino-contrib/jsonschema/examples.User."
         }
       },
       "additionalProperties": false,
@@ -108,7 +108,7 @@
         "named_pets",
         "plants"
       ],
-      "description": "Go type User, defined in package github.com/invopop/jsonschema/examples."
+      "description": "Go type User, defined in package github.com/eino-contrib/jsonschema/examples."
     }
   }
 }

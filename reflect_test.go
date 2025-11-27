@@ -353,7 +353,7 @@ func TestReflectFromType(t *testing.T) {
 	typ := reflect.TypeOf(tu)
 
 	s := r.ReflectFromType(typ)
-	assert.EqualValues(t, "https://github.com/invopop/jsonschema/test-user", s.ID)
+	assert.EqualValues(t, "https://github.com/eino-contrib/jsonschema/test-user", s.ID)
 
 	x := struct {
 		Test string
@@ -541,6 +541,34 @@ func TestArrayExtraTags(t *testing.T) {
 
 	r := new(Reflector)
 	schema := r.Reflect(&URIArray{})
+
+	actualJSON, _ := json.MarshalIndent(schema, "", "  ") //nolint:errchkjson
+	assert.True(t, assert.JSONEq(t, `{
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "https://github.com/eino-contrib/jsonschema/uri-array",
+          "$ref": "#/$defs/URIArray",
+          "$defs": {
+            "URIArray": {
+              "properties": {
+                "TestURIs": {
+                  "items": {
+                    "pattern": "^https://.*",
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "TestURIs"
+              ],
+              "type": "object"
+            }
+          }
+        }`, string(actualJSON)),
+	)
+
 	d := schema.Definitions["URIArray"]
 	require.NotNil(t, d)
 	props := d.Properties

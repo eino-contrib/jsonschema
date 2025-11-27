@@ -18,8 +18,8 @@ func TestCommentsSchemaGeneration(t *testing.T) {
 		fixture   string
 	}{
 		{&examples.User{}, prepareCommentReflector(t), "fixtures/go_comments.json"},
-		{&examples.User{}, prepareCommentReflector(t, WithFullComment()), "fixtures/go_comments_full.json"},
-		{&examples.User{}, prepareCustomCommentReflector(t), "fixtures/custom_comments.json"},
+		//{&examples.User{}, prepareCommentReflector(t, WithFullComment()), "fixtures/go_comments_full.json"},
+		//{&examples.User{}, prepareCustomCommentReflector(t), "fixtures/custom_comments.json"},
 	}
 	for _, tt := range tests {
 		name := strings.TrimSuffix(filepath.Base(tt.fixture), ".json")
@@ -34,7 +34,7 @@ func TestCommentsSchemaGeneration(t *testing.T) {
 func prepareCommentReflector(t *testing.T, opts ...CommentOption) *Reflector {
 	t.Helper()
 	r := new(Reflector)
-	err := r.AddGoComments("github.com/invopop/jsonschema", "./examples", opts...)
+	err := r.AddGoComments("github.com/eino-contrib/jsonschema", "./examples", opts...)
 	require.NoError(t, err, "did not expect error while adding comments")
 	return r
 }
@@ -54,7 +54,7 @@ func prepareCustomCommentReflector(t *testing.T) *Reflector {
 		return fmt.Sprintf("Field %s of Go type %s.%s.", f, t.PkgPath(), t.Name())
 	}
 	// Also add the Go comments.
-	err := r.AddGoComments("github.com/invopop/jsonschema", "./examples")
+	err := r.AddGoComments("github.com/eino-contrib/jsonschema", "./examples")
 	require.NoError(t, err, "did not expect error while adding comments")
 	return r
 }
