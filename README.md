@@ -62,7 +62,7 @@ jsonschema.Reflect(&TestUser{})
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/invopop/jsonschema_test/test-user",
+  "$id": "https://github.com/eino-contrib/jsonschema_test/test-user",
   "$ref": "#/$defs/TestUser",
   "$defs": {
     "TestUser": {
@@ -221,7 +221,7 @@ To get the comments provided into your JSON schema, use a regular `Reflector` an
 
 ```go
 r := new(Reflector)
-if err := r.AddGoComments("github.com/invopop/jsonschema", "./"); err != nil {
+if err := r.AddGoComments("github.com/eino-contrib/jsonschema", "./"); err != nil {
   // deal with error
 }
 s := r.Reflect(&User{})

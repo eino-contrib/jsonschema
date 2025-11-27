@@ -3,6 +3,7 @@ package jsonschema_test
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
 	"time"
 
 	"github.com/eino-contrib/jsonschema"
@@ -19,7 +20,7 @@ type SampleUser struct {
 	FavColor    string         `json:"fav_color,omitempty" jsonschema:"enum=red,enum=green,enum=blue"`
 }
 
-func ExampleReflect() {
+func TestExampleReflect(t *testing.T) {
 	s := jsonschema.Reflect(&SampleUser{})
 	data, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {
@@ -29,7 +30,7 @@ func ExampleReflect() {
 	// Output:
 	// {
 	//   "$schema": "https://json-schema.org/draft/2020-12/schema",
-	//   "$id": "https://github.com/invopop/jsonschema_test/sample-user",
+	//   "$id": "https://github.com/eino-contrib/jsonschema_test/sample-user",
 	//   "$ref": "#/$defs/SampleUser",
 	//   "$defs": {
 	//     "SampleUser": {

@@ -8,7 +8,7 @@ import (
 )
 
 func TestID(t *testing.T) {
-	base := "https://invopop.com/schema"
+	base := "https://eino-contrib.com/schema"
 	id := jsonschema.ID(base)
 
 	assert.Equal(t, base, id.String())
@@ -27,7 +27,7 @@ func TestID(t *testing.T) {
 }
 
 func TestIDValidation(t *testing.T) {
-	id := jsonschema.ID("https://invopop.com/schema/user")
+	id := jsonschema.ID("https://eino-contrib.com/schema/user")
 	assert.NoError(t, id.Validate())
 
 	id = "https://encoding/json"
@@ -40,17 +40,17 @@ func TestIDValidation(t *testing.T) {
 		assert.Contains(t, id.Validate().Error(), "hostname")
 	}
 
-	id = "http://invopop.com"
+	id = "http://eino-contrib.com"
 	if assert.Error(t, id.Validate()) {
 		assert.Contains(t, id.Validate().Error(), "path")
 	}
 
-	id = "foor://invopop.com/schema/user"
+	id = "foor://eino-contrib.com/schema/user"
 	if assert.Error(t, id.Validate()) {
 		assert.Contains(t, id.Validate().Error(), "schema")
 	}
 
-	id = "invopop.com\n/test"
+	id = "eino-contrib.com\n/test"
 	if assert.Error(t, id.Validate()) {
 		assert.Contains(t, id.Validate().Error(), "invalid URL")
 	}

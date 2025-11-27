@@ -78,9 +78,9 @@ func ReflectFromType(t reflect.Type) *Schema {
 // A Reflector reflects values into a Schema.
 type Reflector struct {
 	// BaseSchemaID defines the URI that will be used as a base to determine Schema
-	// IDs for models. For example, a base Schema ID of `https://invopop.com/schemas`
+	// IDs for models. For example, a base Schema ID of `https://eino-contrib.com/schemas`
 	// when defined with a struct called `User{}`, will result in a schema with an
-	// ID set to `https://invopop.com/schemas/user`.
+	// ID set to `https://eino-contrib.com/schemas/user`.
 	//
 	// If no `BaseSchemaID` is provided, we'll take the type's complete package path
 	// and use that as a base instead. Set `Anonymous` to try if you do not want to
@@ -169,11 +169,11 @@ type Reflector struct {
 	//
 	// Type descriptions should be defined like:
 	//
-	//   map[string]string{"github.com/invopop/jsonschema.Reflector": "A Reflector reflects values into a Schema."}
+	//   map[string]string{"github.com/eino-contrib/jsonschema.Reflector": "A Reflector reflects values into a Schema."}
 	//
 	// And Fields defined as:
 	//
-	//   map[string]string{"github.com/invopop/jsonschema.Reflector.DoNotReference": "Do not reference definitions."}
+	//   map[string]string{"github.com/eino-contrib/jsonschema.Reflector.DoNotReference": "Do not reference definitions."}
 	//
 	// See also: AddGoComments, LookupComment
 	CommentMap map[string]string
@@ -554,7 +554,7 @@ func (r *Reflector) reflectStructFields(definitions Definitions, pName string, t
 
 		r.reflectSchemaExtend(definitions, f.Type, property)
 		if r.SchemaModifier != nil {
-			r.SchemaModifier(name, t, tag, st)
+			r.SchemaModifier(name, f.Type, f.Tag, property)
 		}
 
 		st.Properties.Set(name, property)
@@ -1125,13 +1125,18 @@ func (t *Schema) MarshalJSON() ([]byte, error) {
 
 	s := struct {
 		*SchemaAlt `json:",inline"`
-		TypeUnion  *typeUnion `json:"type"`
+		TypeUnion  *typeUnion `json:"type,omitempty"`
 	}{
 		SchemaAlt: (*SchemaAlt)(t),
-		TypeUnion: &typeUnion{
-			Type:         t.Type,
-			TypeEnhanced: t.TypeEnhanced,
-		},
+		TypeUnion: func() *typeUnion {
+			if t.Type == "" && len(t.TypeEnhanced) == 0 {
+				return nil
+			}
+			return &typeUnion{
+				Type:         t.Type,
+				TypeEnhanced: t.TypeEnhanced,
+			}
+		}(),
 	}
 
 	b, err := json.Marshal(s)
